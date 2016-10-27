@@ -18,8 +18,9 @@ $GETH --datadir ${DATADIR} \
   --verbosity 4  \
   --networkid 536354 \
   --nodiscover --autodag \
-  --rpcapi admin,db,debug,eth,miner,net,personal,shh,txpool,web3  \
-  --rpc --rpcport $RPCPORT --rpcaddr 0.0.0.0  --rpccorsdomain '*' 
+  --rpcapi eth,personal,txpool,web3  \
+  --rpc --rpcport $RPCPORT --rpcaddr 0.0.0.0  --rpccorsdomain '*' \
+  --metrics 
 
 
 echo 'Geth done?'

@@ -1,23 +1,27 @@
-eth1:
-  build: .
-  dockerfile: Dockerfile.ethereum
-  volumes:
-    - ./.eth1:/root/.ethereum
-    - ./.eth1/ethasha:/root/.ethash
-  ports:
-    - 8545:8545
-  environment:
-    RPCPORT: 8545
-    DATADIR: /root/.ethereum
+version: '2'
+services:
+  eth1:
+    build: 
+      context: .
+      dockerfile: Dockerfile.ethereum
+    volumes:
+      - ./.eth1:/root/.ethereum
+      - ./.eth1/ethasha:/root/.ethash
+    ports:
+      - 8545:8545
+    environment:
+      RPCPORT: 8545
+      DATADIR: /root/.ethereum
 
-eth2:
-  build: .
-  dockerfile: Dockerfile.ethereum
-  volumes:
-    - ./.eth2/ethereum:/root/.ethereum
-    - ./.eth2/ethasha:/root/.ethash
-  ports:
-    - 8546:8545
-  environment:
-    RPCPORT: 8545
-    DATADIR: /root/.ethereum
+  eth2:
+    build: 
+      context: .
+      dockerfile: Dockerfile.ethereum
+    volumes:
+      - ./.eth2/ethereum:/root/.ethereum
+      - ./.eth2/ethasha:/root/.ethash
+    ports:
+      - 8546:8545
+    environment:
+      RPCPORT: 8545
+      DATADIR: /root/.ethereum
