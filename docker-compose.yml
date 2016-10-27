@@ -1,0 +1,78 @@
+mongo1:
+  image: mongo
+  volumes:
+    - ./.data1/mongo:/data/db
+  ports:
+    - 27017:27017
+
+eth1:
+  build: .
+  dockerfile: Dockerfile.ethereum
+  volumes:
+    - ./.commmon/ethereum:/root/.ethereum
+    - ./.commmon/ethasha:/root/.ethash
+    - .:/root/volume:ro
+  ports:
+    - 8545:8545
+  environment:
+    RPCPORT: 8545
+    DATADIR: /root/.ethereum
+
+notaris:
+  build: .
+  dockerfile: Dockerfile.server.notaris.dev
+  volumes:
+    - ../../tether:/opt/tether    
+    - ../../cgk-chains-platform:/opt/cgk-chains-platform
+    - ../../digital-signature:/opt/digital-signature    
+  ports:
+    - 8080:9999 #9999 - value set in application.properties
+  environment:
+    MONGO_HOST: mongo1
+    ETH_HOST: eth1 #actually this is not used right now. This value should be injected in our Spring application backend, along with the port    
+  links:
+    - mongo1
+    - eth1
+
+supplier:
+  build: .
+  dockerfile: Dockerfile.server.supplier.dev
+  volumes:
+    - ../../tether:/opt/tether    
+    - ../../cgk-chains-platform:/opt/cgk-chains-platform
+    - ../../digital-signature:/opt/digital-signature    
+  ports:
+    - 8090:8888 #9999 - value set in application.properties
+  environment:
+    MONGO_HOST: mongo1
+    ETH_HOST: eth1 #actually this is not used right now. This value should be injected in our Spring application backend, along with the port    
+  links:
+    - mongo1
+    - eth1
+
+notaris-www:
+  build: .
+  dockerfile: Dockerfile.www.dev
+  volumes:
+    - ../NotarisWebsite/frontend:/opt/frontend
+  links:
+    - notaris
+  ports:
+    - 80:80
+  environment:
+    SERVER_ADDRESS: notaris
+    SERVER_PORT: 9999 #current notaris project has this value hardcoded. Should also be injected via docker config in the notaris service 
+
+
+supplier-www:
+  build: .
+  dockerfile: Dockerfile.www.dev
+  volumes:
+    - ../SupplierWebsite/frontend:/opt/frontend
+  links:
+    - supplier
+  ports:
+    - 81:80
+  environment:
+    SERVER_ADDRESS: supplier
+    SERVER_PORT: 8888 #current notaris project has this value hardcoded. Should also be injected via docker config in the notaris service 
