@@ -19,8 +19,7 @@ $GETH --datadir ${DATADIR} \
   --networkid 536354 \
   --nodiscover --autodag \
   --rpcapi admin,db,debug,eth,miner,net,personal,shh,txpool,web3  \
-  --rpc --rpcport $RPCPORT --rpcaddr 0.0.0.0  --rpccorsdomain '*' \
-  --etherbase 0xcd2a3d9f938e13cd947ec05abc7fe734df8dd826 --mine --autodag --minerthreads 2 ${ETH_OPT}
+  --rpc --rpcport $RPCPORT --rpcaddr 0.0.0.0  --rpccorsdomain '*' 
 
 
 echo 'Geth done?'
