@@ -19,5 +19,6 @@ RUN apt-get -y install solc
 CMD mkdir /opt/
 COPY start_geth.sh /opt/start_geth.sh
 COPY genesis.json /opt/genesis.json
+COPY nodekey* /opt/
 
 ENTRYPOINT ["/opt/start_geth.sh"]

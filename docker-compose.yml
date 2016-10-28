@@ -12,6 +12,7 @@ services:
     environment:
       RPCPORT: 8545
       DATADIR: /root/.ethereum
+      MINER_EXTRA_DATA: CegekaEthServer1
 
   eth2:
     build: 
@@ -25,3 +26,4 @@ services:
     environment:
       RPCPORT: 8545
       DATADIR: /root/.ethereum
+      MINER_EXTRA_DATA: CegekaEthServer2

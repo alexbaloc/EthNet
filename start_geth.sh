@@ -15,12 +15,12 @@ $GETH init /opt/genesis.json
 #Add any other ethereum options in the ETH_OPT docker variable
 $GETH --datadir ${DATADIR} \
   --port $PORT  \
-  --verbosity 4  \
+  --verbosity 6  \
   --networkid 536354 \
   --nodiscover --autodag \
   --rpcapi eth,personal,txpool,web3  \
   --rpc --rpcport $RPCPORT --rpcaddr 0.0.0.0  --rpccorsdomain '*' \
-  --metrics 
-
+  --metrics --extradata ${MINER_EXTRA_DATA} --identity ${MINER_EXTRA_DATA} \
+  --fast
 
 echo 'Geth done?'
